@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: dan-gateway-service
+  cloud:
+    gateway:
+      routes:
+        - id: products
+          uri: lb://dan-shop-products-service:8080
+          predicates:
+            - Path=/v1/products/**
