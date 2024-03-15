@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.danservice</groupId>
         <artifactId>dan-service-starter-parent</artifactId>
-        <version>0.0.22</version>
+        <version>0.0.52</version>
     </parent>
 
     <artifactId>gateway</artifactId>
@@ -21,7 +21,7 @@
         <dependency>
             <groupId>com.danservice</groupId>
             <artifactId>dan-service-tech-starter</artifactId>
-            <version>0.0.24</version>
+            <version>0.0.83</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>
@@ -33,6 +33,12 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
+        </dependency>
+        <!--    Custom discovery client implemented in dan-service-tech-starter library disabled along with @SpringBootApplication annotation
+                Therefore adding the spring cloud kubernetes one (would not be compatible with native image) -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-kubernetes-client-loadbalancer</artifactId>
         </dependency>
 
         <dependency>

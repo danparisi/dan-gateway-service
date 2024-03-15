@@ -3,3 +3,11 @@ test-property: consul-dan-gateway-service-config-data-yaml
 spring:
   application:
     name: dan-gateway-service
+  cloud:
+    refresh:
+      # Enabled as this service is not meant to be deployed as native image.
+      enabled: true
+    openfeign:
+      client:
+        # Enabled as this service is not meant to be deployed as native image.
+        refresh-enabled: true
