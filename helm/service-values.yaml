@@ -1,3 +1,10 @@
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 10
+  targetOrdersPerSeconds: 25
+
+
 service:
   type: ClusterIP
   port: 80
