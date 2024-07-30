@@ -2,7 +2,6 @@ package com.danservice.gateway;
 
 import io.micrometer.common.KeyValue;
 import io.micrometer.common.KeyValues;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.server.reactive.observation.DefaultServerRequestObservationConvention;
@@ -15,24 +14,24 @@ import static org.springframework.http.server.reactive.observation.ServerHttpObs
 
 @Configuration
 public class MicrometerConfiguration {
+    private static final String KEY_URI = "uri";
     private static final String UNKNOWN = "UNKNOWN";
 
     @Bean
     public ServerRequestObservationConvention uriTagContributorForObservationApi() {
 
         /**
-         * Fixes the URI {@link org.springframework.http.server.reactive.observation.ServerHttpObservationDocumentation} value when set as <b>UNKNOWN</b>
-         * by Spring framework issue. See https://github.com/spring-cloud/spring-cloud-gateway/issues/891 and
+         * Fixes the URI {@link org.springframework.http.server.reactive.observation.ServerHttpObservationDocumentation} value when set as <b>UNKNOWN</b> in /metrics API
+         * by Spring framework issue. See https://github.com/spring-cloud/spring-cloud-gateway/issues/891
          */
         return new DefaultServerRequestObservationConvention() {
-            @NotNull
             @Override
             public KeyValues getLowCardinalityKeyValues(ServerRequestObservationContext context) {
                 KeyValues lowCardinalityKeyValues = super.getLowCardinalityKeyValues(context);
 
                 if (isUriTagNullOrUnknown(context, lowCardinalityKeyValues)) {
                     return lowCardinalityKeyValues
-                            .and(KeyValue.of("uri", context.getCarrier().getPath().value()));
+                            .and(KeyValue.of(KEY_URI, context.getCarrier().getPath().value()));
                 }
 
                 return lowCardinalityKeyValues;
@@ -47,5 +46,4 @@ public class MicrometerConfiguration {
             }
         };
     }
-
 }
